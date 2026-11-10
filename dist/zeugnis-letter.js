@@ -56,7 +56,7 @@
     const button=e.target.closest('button');
     if(!button || button.closest('.output-panel'))return;
     if(button.id==='print'||/Drucken|als PDF speichern/.test(button.textContent)){
-      e.preventDefault();e.stopImmediatePropagation();openOutput(button);
+      e.preventDefault();e.stopImmediatePropagation();if(window.NexusPreflight)window.NexusPreflight.run(()=>openOutput(button));else openOutput(button);
     }
   },true);
 })();

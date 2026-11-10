@@ -1,6 +1,6 @@
 # neXus Workspace
 
-Installierbare Web-App für iPhone, iPad und Desktop. Drei vorhandene neXus-Tools in ihren neuesten gefundenen Fassungen, mit gemeinsamem Einstieg und Navigation. Keine externen Laufzeitabhängigkeiten.
+Installierbare Web-App für iPhone, iPad und Desktop. HR-Werkzeuge mit gemeinsamem Einstieg, Navigation und lokaler Vorgangsverwaltung. Keine externen Laufzeitabhängigkeiten.
 
 ## GitHub Pages
 1. Repository `nexus-workspace` mit Standardbranch `main` anlegen.
@@ -15,9 +15,20 @@ Quelle: https://docs.github.com/en/pages/getting-started-with-github-pages/using
 URL in Safari öffnen, Teilen → Zum Home-Bildschirm. Erst nach der Meldung „Für Offline-Nutzung vorbereitet“ offline verwenden. Jedes Modul öffnet im selben App-Fenster. Touch-/Stiftunterschriften bleiben Teil des Protokolls. Echte Geräteprüfung steht aus.
 
 ## Daten und Exporte
-Keine automatische Speicherung, kein Backend, keine Gerätesynchronisation. Vor Modulwechsel/Schließen JSON exportieren. Exitgespräch und Übergabeprotokoll behalten ihre bestehenden JSON-Funktionen. Der Bewertungsrechner hat ergänzend JSON-Import/Export. PDF: Druckfunktion im Modul → Systemdialog → PDF sichern/teilen. Verhalten des Druckdialogs auf iOS/iPadOS bitte auf dem Zielgerät prüfen.
+Kein Backend und keine Gerätesynchronisation. Alle fünf Werkzeuge können über „Entwurf speichern“ lokal auf diesem Gerät gesichert werden. Vor Modulwechsel/Schließen speichern; ungespeicherte Änderungen werden beim Verlassen angekündigt. Unter „Entwürfe“ lassen sich Vorgänge öffnen, kopieren, durchsuchen, filtern, in den Papierkorb verschieben und wiederherstellen. Eine vollständige JSON-Sicherung enthält auch den Papierkorb. Beim Import werden vorhandene Vorgänge niemals überschrieben; Kollisionen werden als zusätzliche Kopie importiert. Browserdaten löschen entfernt die lokalen Entwürfe. Regelmäßig Sicherungen herunterladen. Exitgespräch und Übergabeprotokoll behalten ihre bestehenden JSON-Funktionen. Der Bewertungsrechner hat ergänzend JSON-Import/Export. PDF: Export im Modul; die vorgeschaltete Prüfung blockiert fehlende Pflichtangaben und meldet mögliche Widersprüche. Der Zeugnisgenerator bietet zusätzlich echten, bearbeitbaren DOCX-Export mit Logo, A4-Briefkopf, Blocksatz und Seitenzahlen. Verhalten des Druckdialogs auf iOS/iPadOS bitte auf dem Zielgerät prüfen.
 
 GitHub Pages stellt den App-Code bereit; es ist keine Benutzerverwaltung implementiert. Keine ausgefüllten HR-Formulare oder personenbezogenen JSON-Dateien ins Repository hochladen. Die App wird ohne Fallakten ausgeliefert.
+
+## Erweiterungen Version 2.0
+- Vorgangsstatus „Entwurf“, „In Prüfung“ und „Freigegeben“ mit prüfender Person; Änderungen am Inhalt setzen eine Freigabe zurück. Die Angabe ist ein interner Bearbeitungsstand, keine digitale Unterschrift oder Zugriffssperre.
+- Positionsvorlagen Associate, Consultant, Senior und Managing Consultant. Einsatzbereich und Aufgaben bleiben individuell bearbeitbar. Vorlagen ersetzen vorhandene Texte erst nach Bestätigung.
+- Onboarding- und Offboarding-Checklisten mit editierbaren Verantwortlichen, Fristen relativ zum ersten/letzten Arbeitstag, Aufgabenstatus, Notizen, eigenen Aufgaben und Links zu passenden Werkzeugen. Manuell gesetzte Fristen bleiben bei Änderung des Stichtags erhalten. Jeder Vorgang wird separat gespeichert.
+- Keine gemeinsame Mitarbeiter-Stammdatenbank. Namen in einzelnen Formularen gehören ausschließlich zum jeweiligen Vorgang.
+
+## Entwicklung
+Kein Build erforderlich. Für die Funktionsprüfungen: `npm install`, danach `npm test` (Node.js 18 oder neuer). Der Test lädt die lokalen HTML-Module in einer virtuellen DOM-Umgebung und prüft Speicher-/Wiederherstellungsabläufe, Freigaberücksetzung, Vorlagen, Validierung und Checklisten.
+
+Die Word-Bibliothek docx 9.5.1 wird lokal ausgeliefert; Lizenz: `dist/LICENSE-docx.txt`.
 
 ## Enthaltene Originalfassungen
 - neXus_Bewertungsrechner_2027_erweitert.html

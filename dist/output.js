@@ -26,7 +26,7 @@
     function walk(el) {
       if(el.nodeType===Node.TEXT_NODE){line += el.textContent;return;}
       if(el.nodeType!==Node.ELEMENT_NODE) return;
-      if(el.matches('script,style,nav,button,input[type=file],.toolbar,.backupbar,.output-panel,.leavehint,#status,.chips,.optional-controls,.optional-heading')) return;
+      if(el.matches('script,style,nav,button,input[type=file],.toolbar,.backupbar,.output-panel,.leavehint,#status,.chips,.optional-controls,.optional-heading,.workflowbar,.preflight-panel,.ws-filters')) return;
       if(el.hidden || getComputedStyle(el).display==='none' || getComputedStyle(el).visibility==='hidden') return;
       if(el.matches('input,select,textarea')) {
         let value = el.tagName==='SELECT' ? el.selectedOptions[0]?.textContent : el.value;
@@ -98,7 +98,7 @@
     const button=e.target.closest('button');
     if(!button || button.closest('.output-panel'))return;
     if(button.id==='print'||/Drucken|als PDF speichern/.test(button.textContent)){
-      e.preventDefault();e.stopImmediatePropagation();openOutput(button);
+      e.preventDefault();e.stopImmediatePropagation();if(window.NexusPreflight)window.NexusPreflight.run(()=>openOutput(button));else openOutput(button);
     }
   },true);
 })();
