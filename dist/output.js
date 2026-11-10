@@ -26,7 +26,7 @@
     function walk(el) {
       if(el.nodeType===Node.TEXT_NODE){line += el.textContent;return;}
       if(el.nodeType!==Node.ELEMENT_NODE) return;
-      if(el.matches('script,style,nav,button,input[type=file],.toolbar,.backupbar,.output-panel,.leavehint,#status,.chips,.optional-controls,.optional-heading,.workflowbar,.preflight-panel,.ws-filters')) return;
+      if(el.matches('script,style,nav,button,input[type=file],.toolbar,.backupbar,.output-panel,.leavehint,#status,.chips,.optional-controls,.optional-heading,.workflowbar,.preflight-panel,.ws-filters,.nexus-masthead,.nexus-site-footer')) return;
       if(el.hidden || getComputedStyle(el).display==='none' || getComputedStyle(el).visibility==='hidden') return;
       if(el.matches('input,select,textarea')) {
         let value = el.tagName==='SELECT' ? el.selectedOptions[0]?.textContent : el.value;

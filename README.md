@@ -39,3 +39,6 @@ Frühere Versionen derselben Tools wurden nicht als zusätzliche Module übernom
 Bei Änderungen an Offline-Dateien die CACHE-Version in dist/sw.js erhöhen. Nach Schließen aller App-Fenster wird der neue Service Worker beim nächsten Start aktiv. Kein Build erforderlich.
 
 Onboarding-/Offboarding-Checklisten und Freigabestatus wurden entfernt. Lokale Entwürfe und alte Sicherungen bleiben lesbar. Ältere Checklisten werden nicht mehr angezeigt; sie bleiben in der Gesamtsicherung erhalten.
+
+## neXus Corporate Design
+Das Frontend verwendet Original-Logo, neXus-Blau #225378 / #286893 und ein gemeinsames Layout. Geräte-Badges und Installationsanleitung sind entfernt. Die Hausschrift IdealistSans-Light wird über lokale Schriftnamen verwendet, wenn sie auf dem Gerät installiert ist. Für die geräteunabhängige Einbettung fehlt noch die originale Webfont-Datei; bis dahin greifen Arial / Helvetica als Fallback. Die PDF- und Word-Brieflayouts bleiben davon unabhängig.

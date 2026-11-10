@@ -1,5 +1,11 @@
 (()=>{'use strict';
 const base=new URL('./',document.currentScript.src);
+const pages={'bewertung.html':'Bewertungsrechner','exit.html':'Exitgespräch','protokoll.html':'Übergabe & Rückgabe','zeugnis.html':'Zeugnisgenerator','entwuerfe.html':'Entwürfe'};
+const page=location.pathname.split('/').pop(),name=pages[page]||'Übersicht';
+const masthead=document.createElement('header');masthead.className='nexus-masthead';masthead.dataset.workspaceControls='true';
+const home=document.createElement('a');home.className='nexus-brand';home.href=new URL('index.html',base);home.setAttribute('aria-label','neXus Procurement – Workspace Übersicht');const brandImage=document.createElement('img');brandImage.src=new URL('nexus-logo.png',base);brandImage.alt='neXus Procurement';brandImage.width=240;brandImage.height=67;home.append(brandImage);
+const context=document.createElement('div');context.className='nexus-context';const contextLabel=document.createElement('span');contextLabel.textContent='WORKSPACE';const contextName=document.createElement('strong');contextName.textContent=name;context.append(contextLabel,contextName);masthead.append(home,context);document.body.prepend(masthead);
+const siteFooter=document.createElement('footer');siteFooter.className='nexus-site-footer';siteFooter.dataset.workspaceControls='true';siteFooter.innerHTML='<span>neXus Procurement GmbH</span><span>Personal & Dokumente</span>';document.body.append(siteFooter);
 const toggle=document.createElement('button');toggle.type='button';toggle.className='menu-toggle';toggle.setAttribute('aria-label','Navigation öffnen');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','workspaceNavigation');
 const hamburger='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
 const cross='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
