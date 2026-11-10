@@ -18,7 +18,7 @@ function render(){
  const interim=value('kind')==='interim',person=value('salutation')+' '+fallback('lastName','Nachname'),full=value('salutation')+' '+fallback('firstName','Vorname')+' '+fallback('lastName','Nachname');
  if(interim!==previousInterim&&value('duties')===defaultDuties(previousInterim))$('duties').value=defaultDuties(interim);
  previousInterim=interim;$('endField').hidden=interim;$('end').required=!interim;$('reasonField').hidden=interim;$('interimHint').hidden=!interim;$('customReasonField').hidden=interim||value('reason')!=='custom';$('customReason').required=!interim&&value('reason')==='custom';
- const root=$('certificatePreview');root.replaceChildren();const logo=new Image();logo.src='../nexus-logo.png';logo.alt='neXus Procurement';logo.className='certificate-logo';root.append(logo);
+ const root=$('certificatePreview');root.replaceChildren();const logo=new Image();logo.src='../nexus-logo.png';logo.alt='neXus Procurement';logo.className='certificate-logo';const head=document.createElement('div');head.className='letterhead';const details=document.createElement('div');details.className='letterhead-company';details.append(text('strong','neXus Procurement GmbH'),text('div','Am Heineshof 29'),text('div','41066 Mönchengladbach'),text('div','www.nexus-procurement.com'));head.append(details,logo);root.append(head,text('div','neXus Procurement GmbH · Am Heineshof 29 · 41066 Mönchengladbach','sender-line'));
  root.append(text('address',[full,value('street'),[value('postcode'),value('city')].filter(Boolean).join(' ')].filter(Boolean).join('\n')));
  root.append(text('h1',interim?'Zwischenzeugnis':'Arbeitszeugnis'));
  const birth=value('birth')?', geboren am '+date('birth')+',':'';
