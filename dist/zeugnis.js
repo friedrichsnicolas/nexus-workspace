@@ -21,7 +21,7 @@ function render(){
  const root=$('certificatePreview');root.replaceChildren();const logo=new Image();logo.src='../nexus-logo.png';logo.alt='neXus Procurement';logo.className='certificate-logo';root.append(logo);
  root.append(text('address',[full,value('street'),[value('postcode'),value('city')].filter(Boolean).join(' ')].filter(Boolean).join('\n')));
  root.append(text('h1',interim?'Zwischenzeugnis':'Arbeitszeugnis'));
- const birth=value('birth')?', geboren am '+date('birth')+',':',';
+ const birth=value('birth')?', geboren am '+date('birth')+',':'';
  root.append(text('p',full+birth+' '+(interim?'ist seit dem '+date('start'):'war vom '+date('start')+' bis zum '+date('end'))+' als '+fallback('position','Position')+' bei der neXus Procurement GmbH tätig.'));
  if(value('company'))root.append(text('p',value('company')));
  root.append(text('p',person+' '+(interim?'ist':'war')+' im Bereich '+fallback('area','Einsatzbereich')+' eingesetzt.'));
