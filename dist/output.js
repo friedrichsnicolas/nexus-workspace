@@ -21,6 +21,14 @@
     }
   });
   function collect() {
+    if(window.NexusModule?.type==='checklisten'){
+      const d=window.NexusModule.getData(),states={open:'Offen',progress:'In Bearbeitung',done:'Erledigt',na:'Entfällt'},date=v=>v?v.split('-').reverse().join('.'):'—';
+      const blocks=[{text:d.process==='offboarding'?'Offboarding-Checkliste':'Onboarding-Checkliste',heading:true},{text:'Vorgang: '+d.title},{text:(d.process==='offboarding'?'Letzter':'Erster')+' Arbeitstag: '+date(d.anchor)}];
+      if(d.notes.trim())blocks.push({text:'Übergreifende Notiz: '+d.notes});
+      const active=d.tasks.filter(t=>t.state!=='na');blocks.push({text:active.filter(t=>t.state==='done').length+' von '+active.length+' aktiven Aufgaben erledigt'});
+      d.tasks.forEach((t,i)=>{blocks.push({text:(i+1)+'. '+t.title,heading:true},{text:'Verantwortlich: '+(t.owner||'—')+' | Fällig: '+date(t.due)+' | Status: '+states[t.state]});if(t.note.trim())blocks.push({text:'Notiz / Ergebnis: '+t.note});});
+      return blocks;
+    }
     const blocks = []; let line = '';
     const flush = () => { if(line.trim()) blocks.push({text:line.replace(/\s+/g,' ').trim()}); line = ''; };
     function walk(el) {
@@ -58,7 +66,10 @@
   }
   async function makePdf(blocks) {
     if(!window.jspdf?.jsPDF) throw Error('Die PDF-Komponente ist noch nicht geladen. Bitte die App online neu öffnen.');
-    const doc = new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+    const checklist=window.NexusModule?.type==='checklisten';
+    const doc = new window.jspdf.jsPDF({unit:'mm',format:'a4',compress:true,putOnlyUsedFonts:true});
+    const response=await fetch(new URL('../fonts/certificate-fonts.json',location.href));if(!response.ok)throw Error('Schriftdatei konnte nicht geladen werden. Bitte die App online neu öffnen.');const fonts=await response.json();
+    doc.addFileToVFS('NexusSans.ttf',fonts.regular);doc.addFont('NexusSans.ttf','NexusSans','normal');doc.addFileToVFS('NexusSans-Bold.ttf',fonts.bold);doc.addFont('NexusSans-Bold.ttf','NexusSans','bold');
     const img = new Image(); img.src = new URL('../nexus-logo.png',location.href).href;
     await img.decode();
     const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
@@ -69,14 +80,15 @@
     const page=()=>{doc.addPage();header();}; header();
     for(const block of blocks){
       if(block.image){const w=85,h=Math.min(45,w/block.ratio);if(y+h>278)page();doc.addImage(block.image,'PNG',15,y,w,h);y+=h+5;continue;}
-      doc.setFont('helvetica',block.heading?'bold':'normal');doc.setFontSize(block.heading?13:10);
+      if(block.heading&&y>258)page();
+      doc.setFont('NexusSans',block.heading?'bold':'normal');doc.setFontSize(block.heading?(checklist?11:13):10);
       const text=block.text.replace(/[↗↙→←]/g,' ').replace(/—/g,'-');
-      const lines=doc.splitTextToSize(text,180);const lineHeight=block.heading?6:4.8;
+      const lines=doc.splitTextToSize(text,180);const lineHeight=block.heading?(checklist?5.3:6):4.8;
       for(const line of lines){if(y+lineHeight>278)page();doc.text(line,15,y);y+=lineHeight;}
-      y+=block.heading?3:1.7;
+      y+=block.heading?(checklist?2:3):1.7;
     }
     const pages=doc.getNumberOfPages();
-    for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text(`neXus Procurement | ${i} / ${pages}`,15,289);doc.setTextColor(0);}
+    for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFont('NexusSans','normal');doc.setFontSize(8);doc.setTextColor(90);doc.text(`neXus Procurement | ${i} / ${pages}`,15,289);doc.setTextColor(0);}
     return doc.output('blob');
   }
   async function openOutput(button) {
