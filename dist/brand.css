@@ -37,3 +37,5 @@
 @media print{.nexus-masthead,.nexus-site-footer{display:none!important}}
 
 @media screen{body{font-synthesis:none}.nexus-tool .certificate-paper{font-synthesis:weight style}}
+
+@media screen{.nexus-tool .document-logo{display:none}}
