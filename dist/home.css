@@ -2,3 +2,5 @@
 .brand img{display:block;width:100%;max-width:190px;height:auto;margin-bottom:32px}.brand{display:block}
 
 body>main{margin:0 auto;padding-top:90px;max-width:1480px}body>main>header{min-height:30px}@media(max-width:700px){body>main{padding-top:86px}}
+
+@media(min-width:1101px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}

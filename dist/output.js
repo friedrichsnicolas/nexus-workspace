@@ -54,7 +54,7 @@
       if(/^H[1-6]$/.test(el.tagName)) blocks.slice(start).forEach(b=>b.heading=true);
       if(el.tagName==='TD'||el.tagName==='TH') line+=' | ';
     }
-    walk(document.body);flush();return blocks;
+    walk(document.querySelector('[data-output-root]') || document.body);flush();return blocks;
   }
   async function makePdf(blocks) {
     if(!window.jspdf?.jsPDF) throw Error('Die PDF-Komponente ist noch nicht geladen. Bitte die App online neu öffnen.');
