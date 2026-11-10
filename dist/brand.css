@@ -1,3 +1,4 @@
+*,*::before,*::after{box-sizing:border-box}
 @font-face{font-family:'neXus Idealist';src:local('IdealistSans-Light'),local('Idealist Sans Light'),local('Idealistsans-light');font-weight:300;font-style:normal;font-display:swap}
 /* Shared neXus corporate interface. Document and print layouts remain independent. */
 :root{--nexus-font:'neXus Idealist','Idealist Sans Light','IdealistSans-Light',Arial,Helvetica,sans-serif;--nexus-primary:#225378;--nexus-accent:#286893;--nexus-ink:#243744;--nexus-muted:#5e6f7b;--nexus-line:#dce3e8;--nexus-bg:#f5f7f9;--navy:#225378;--blue:#286893;--ink:#243744;--muted:#5e6f7b;--line:#dce3e8;--border:#dce3e8;--pale:#edf2f6;--bg:#f5f7f9}
