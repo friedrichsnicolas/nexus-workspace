@@ -24,7 +24,7 @@ function render(){
  const birth=value('birth')?', geboren am '+date('birth')+',':'';
  root.append(text('p',full+birth+' '+(interim?'ist seit dem '+date('start'):'war vom '+date('start')+' bis zum '+date('end'))+' als '+fallback('position','Position')+' bei der neXus Procurement GmbH tätig.'));
  if(value('company'))root.append(text('p',value('company')));
- root.append(text('p',person+' '+(interim?'ist':'war')+' im Bereich '+fallback('area','Einsatzbereich')+' eingesetzt.'));
+ root.append(text('p',person+' '+(interim?'ist':'war')+' im Einsatzbereich „'+fallback('area','Einsatzbereich')+'“ tätig.'));
  root.append(text('p',fallback('duties','Tätigkeitsbeschreibung')));
  const past=interim?'sind':'waren',single=interim?'ist':'war';
  root.append(text('p','Die Fachkenntnisse '+past+' '+['stets außerordentlich umfassend und sicher.','stets umfassend und sicher.','umfassend und sicher.','für die übertragenen Aufgaben ausreichend.'][grade('knowledge')]+' Die Auffassungsgabe und Analysefähigkeit '+single+' '+['stets sehr gut.','stets gut.','gut.','ausreichend.'][grade('analysis')]));
@@ -38,7 +38,7 @@ function render(){
  root.append(text('footer','neXus Procurement GmbH | Am Heineshof 29 | 41066 Mönchengladbach\nwww.nexus-procurement.com | Sitz der Gesellschaft: Mönchengladbach | AG Mönchengladbach: HRB 22810'));
 }
 function validate(){form.classList.add('was-validated');if(!form.checkValidity()){form.reportValidity();$('certificateStatus').textContent='Bitte alle Pflichtfelder vollständig ausfüllen.';return false;}if(value('kind')==='final'&&value('end')<value('start')){$('certificateStatus').textContent='Das Austrittsdatum darf nicht vor dem Eintrittsdatum liegen.';$('end').focus();return false;}if(value('birth')&&value('birth')>=value('start')){$('certificateStatus').textContent='Bitte Geburtsdatum und Eintrittsdatum prüfen.';return false;}if(value('issueDate')<value('start')){$('certificateStatus').textContent='Das Zeugnisdatum darf nicht vor dem Eintritt liegen.';return false;}$('certificateStatus').textContent='';return true;}
-form.addEventListener('input',render);form.addEventListener('change',render);form.addEventListener('submit',e=>e.preventDefault());
+const edit=()=>{$('certificateStatus').textContent='';render();};form.addEventListener('input',edit);form.addEventListener('change',edit);form.addEventListener('submit',e=>e.preventDefault());
 $('resetDuties').onclick=()=>{if(!confirm('Eigene Änderungen an Einsatzbereich und Aufgaben durch den Standardtext ersetzen?'))return;$('area').value=areaDefault;$('duties').value=defaultDuties(value('kind')==='interim');render();};
 document.addEventListener('click',e=>{if(e.target.closest('#certificatePrint')){render();if(!validate()){e.preventDefault();e.stopImmediatePropagation();}}},true);
 $('certificateSave').onclick=()=>{const data={format:'nexus-zeugnis',version:1,values:Object.fromEntries(ids.map(id=>[id,$(id).value]))};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='neXus_Zeugnis.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),15000);$('certificateStatus').textContent='JSON-Sicherung bereitgestellt.';};
