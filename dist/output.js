@@ -33,6 +33,16 @@
         if(el.type==='checkbox'||el.type==='radio') value=el.checked?'[Ja]':'[Nein]';
         line += ' ' + (value || '—') + ' '; return;
       }
+      if(el.tagName==='TR') {
+        flush(); const values=[...el.children].map(cell=>{
+          const clone=cell.cloneNode(true);
+          [...clone.querySelectorAll('input,select,textarea')].forEach((copy,i)=>{
+            const original=cell.querySelectorAll('input,select,textarea')[i];
+            copy.replaceWith(document.createTextNode(original.tagName==='SELECT'?(original.selectedOptions[0]?.textContent||'-'):(original.value||'-')));
+          });
+          return clone.textContent.replace(/\s+/g,' ').trim();
+        });blocks.push({text:values.join(' | ')});return;
+      }
       if(el.tagName==='CANVAS') {flush();blocks.push({image:el.toDataURL('image/png'),ratio:el.width/el.height});return;}
       if(el.tagName==='IMG'||el.tagName==='SVG') return;
       if(el.tagName==='BR'){flush();return;}
