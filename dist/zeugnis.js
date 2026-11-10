@@ -24,7 +24,7 @@ function render(){
  const birth=value('birth')?', geboren am '+date('birth')+',':'';
  root.append(text('p',full+birth+' '+(interim?'ist seit dem '+date('start'):'war vom '+date('start')+' bis zum '+date('end'))+' als '+fallback('position','Position')+' bei der neXus Procurement GmbH tätig.'));
  if(value('company'))root.append(text('p',value('company')));
- root.append(text('p',person+' '+(interim?'ist':'war')+' im Einsatzbereich „'+fallback('area','Einsatzbereich')+'“ tätig.'));
+ root.append(text('p',person+' '+(interim?'ist':'war')+' im Einsatzbereich '+fallback('area','Einsatzbereich')+' tätig.'));
  root.append(text('p',fallback('duties','Tätigkeitsbeschreibung')));
  const past=interim?'sind':'waren',single=interim?'ist':'war';
  root.append(text('p','Die Fachkenntnisse '+past+' '+['stets außerordentlich umfassend und sicher.','stets umfassend und sicher.','umfassend und sicher.','für die übertragenen Aufgaben ausreichend.'][grade('knowledge')]+' Die Auffassungsgabe und Analysefähigkeit '+single+' '+['stets sehr gut.','stets gut.','gut.','ausreichend.'][grade('analysis')]));
